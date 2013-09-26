@@ -1,0 +1,27 @@
+/* Custom stylesheet */
+
+/* BASE STYLES
+------------------------------------------------ */
+
+body {
+	font-family: 'Snowburst One', tahoma, arial;
+	font-size: 16px;
+}
+
+/* GAME
+-------------------------------------------------- */
+
+#container {
+	border: 1px solid #000;
+	margin: 15px auto;
+	overflow: hidden;
+	width: 840px;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-drag: none;
+	line-height: 0px;
+}
