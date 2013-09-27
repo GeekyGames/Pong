@@ -12,21 +12,40 @@ var Game = {
 		Game.Draw();
 	},
 	Draw: function(){
-		
+		player1.draw();
+		player2.draw();
 	},
 	Update: function(){
-		
+		player1.update();
+		player2.update();
 	},
 	Distance: function(x,y,x2,y2){
 		var answer = (x2 - x)*(x2 - x) + (y2 - y)*(y2 - y);
 		answer = Math.round(Math.sqrt(answer));
 		return answer;
 	},
-	Player1 {
+	player1 {
 		alive: true,
-		x: 0,
-		
+		x: 200,
+		draw = function () {
+			ctx.color: "blue";
+			ctx.draw_rect(, , ,);
+		},
+		update = function () {
+			
+		}
 	},
+	player2 {
+		alive: true,
+		x: 200,
+		draw = function () {
+			ctx.color: "red";
+			ctx.draw_rect(, , ,);
+		},
+		update = function () {
+			
+		}
+	}
 	Random: function(min,max){
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
