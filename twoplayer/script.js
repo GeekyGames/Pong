@@ -22,6 +22,11 @@ var Game = {
 		answer = Math.round(Math.sqrt(answer));
 		return answer;
 	},
+	Player1 {
+		alive: true,
+		x: 0,
+		
+	},
 	Random: function(min,max){
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
