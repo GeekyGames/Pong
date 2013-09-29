@@ -27,9 +27,12 @@ var Game = {
 	player1 {
 		alive: true,
 		x: 200,
-		draw = function () {
-			ctx.color: "blue";
-			ctx.draw_rect(, , ,);
+		y: null,
+		width: null,
+		height: null,
+		draw: function () {
+			ctx.color = "blue";
+			ctx.fillRect(this.x,this.y,this.width,this.height);
 		},
 		update = function () {
 			
@@ -38,9 +41,12 @@ var Game = {
 	player2 {
 		alive: true,
 		x: 200,
+		y: null,
+		width: null,
+		height: null,
 		draw = function () {
-			ctx.color: "red";
-			ctx.draw_rect(, , ,);
+			ctx.color = "red";
+			ctx.fillRect(this.x,this.y,this.width,this.height);
 		},
 		update = function () {
 			
