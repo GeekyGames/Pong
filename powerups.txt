@@ -1,0 +1,9 @@
+POWERUP		DESCRIPTION
+Big			Makes your paddle big.
+Small			Makes your paddle small.
+Big Ball			Makes the ball big.
+Small Ball (no pun intended)	Makes the ball small.
+Ice Ball			The ball slows down.
+Fireball			The ball speeds up.
+#add powerups here whenver you have an idea--even if we probably wont use it. the powerups
+#here should be for both single player and two player.

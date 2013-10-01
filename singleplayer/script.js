@@ -1,10 +1,27 @@
 //Game Vars
+var mouse = {
+	x: null
+}
 var paddle = {
+	x: 250,
+	y: 620,
+	width: 75,
+	height: 10,
+	color: "blue",
+	draw: function(){
+		ctx.fillStyle = this.color;
+		ctx.fillRect(this.x,this.y,this.width,this.height);
+	},
+	update: function(){
+		this.x = mouse.x;
+	}
+}
+var enemypaddle = {
 	x: null,
 	y: null,
 	width: null,
 	height: null,
-	color: "blue",
+	color: "red",
 	draw: function(){
 		ctx.fillStyle = this.color;
 		ctx.fillRect(this.x,this.y,this.width,this.height);
@@ -73,8 +90,11 @@ function powerup(type){
 	//and so on...
 	}
 }
+var powerup_types = [/*names of all powerups we think of here*/];
+var powerups = [];//array of all powerups active
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+var rect = canvas.getBoundingClientRect();
 var Game = {
 	FPS: 20,
 	Tick: function(){
@@ -82,21 +102,28 @@ var Game = {
 		Game.Draw();
 	},
 	Draw: function(){
-		
+		paddle.draw();
+		enemypaddle.draw();
+		ball.draw();
+		for(var x in powerups){
+			powerups[x].draw();
+		}
 	},
 	Update: function(){
-		
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+		paddle.update();
+		enemypaddle.update();
+		ball.update();
+		for(var x in powerups){
+			powerups[x].update();
+		}
 	},
 	Random: function(min,max){
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 };
 setInterval(Game.Tick,1000/Game.FPS);
-document.onkeydown = function(e){
+document.onmousemove = function(e){
 	e = e || window.event;
-	c = e.keyCode;
-};
-document.onkeyup = function(e){
-	e = e || window.event;
-	c = e.keyCode;
-};
+	mouse.x = e.pageX - rect.left;
+}
