@@ -52,6 +52,24 @@ var Game = {
 			
 		}
 	}
+	},
+	ball {
+		x: null,
+		y: null,
+		vx: null,
+		vy: null,
+		radius: 20,
+		color: "purple",
+		draw = function () {
+			ctx.beginPath();
+			ctx.fillStyle = this.color;
+			ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+		},
+		update = function () {
+			this.x += this.vx / FPS;
+			this.y += this.vy / FPS;
+		}
+	},
 	Random: function(min,max){
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
