@@ -35,7 +35,7 @@ var Game = {
 			ctx.fillRect(this.x,this.y,this.width,this.height);
 		},
 		update = function () {
-			
+			this.x += this.vx / FPS;
 		}
 	},
 	player2 {
@@ -49,9 +49,8 @@ var Game = {
 			ctx.fillRect(this.x,this.y,this.width,this.height);
 		},
 		update = function () {
-			
+			this.x += this.vx / FPS;
 		}
-	}
 	},
 	ball {
 		x: null,
