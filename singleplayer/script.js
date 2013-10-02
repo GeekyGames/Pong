@@ -119,4 +119,4 @@ setInterval(Game.Tick,1000/Game.FPS);
 document.onmousemove = function(e){
 	e = e || window.event;
 	mouse.x = e.pageX - rect.left;
-}
+};
