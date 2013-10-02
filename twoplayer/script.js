@@ -23,7 +23,6 @@ var Game = {
 		return answer;
 	},
 	player1 {
-		alive: true,
 		x: 200,
 		y: null,
 		width: null,
@@ -37,7 +36,6 @@ var Game = {
 		}
 	},
 	player2 {
-		alive: true,
 		x: 200,
 		y: null,
 		width: null,
