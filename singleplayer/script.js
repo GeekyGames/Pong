@@ -92,7 +92,8 @@ function powerup(type){
 	//and so on...
 	}
 }
-var powerup_types = [/*names of all powerups we think of here*/];
+var powerup_types = [/*names of all powerups we think of here*/
+		     big, small, bigBall, smallBall, iceBall, fireBalll, multiBall];
 var powerups = [];//array of all powerups active
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
