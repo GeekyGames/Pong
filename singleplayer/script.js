@@ -27,14 +27,16 @@ var enemypaddle = {
 		ctx.fillRect(this.x,this.y,this.width,this.height);
 	},
 	update: function(){
-		
+		if (ball.x > this.x) {
+			this.x += 5;
+		}
 	}
 }
 var ball = {
 	x: null,
 	y: null,
 	radius: 4,
-	color: "white",
+	color: "purple",
 	ax: null,
 	ay: null,
 	vx: null,
