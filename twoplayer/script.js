@@ -10,10 +10,12 @@ var Game = {
 	Draw: function(){
 		player1.draw();
 		player2.draw();
+		ball.draw();
 	},
 	Update: function(){
 		player1.update();
 		player2.update();
+		ball.update();
 	},
 	Distance: function(x,y,x2,y2){
 		var answer = (x2 - x)*(x2 - x) + (y2 - y)*(y2 - y);
@@ -49,10 +51,12 @@ var Game = {
 		}
 	},
 	ball {
-		x: null,
-		y: null,
-		vx: null,
-		vy: null,
+		x: 100,
+		y: 100,
+		vx: 20,
+		vy: 20,
+		ax: 20,
+		ay; 20,
 		radius: 20,
 		color: "purple",
 		draw = function () {
@@ -63,6 +67,8 @@ var Game = {
 		update = function () {
 			this.x += this.vx / FPS;
 			this.y += this.vy / FPS;
+			this.vx += this.ax / FPS;
+			this.vy += this.ay / FPS;
 		}
 	},
 	Random: function(min,max){
