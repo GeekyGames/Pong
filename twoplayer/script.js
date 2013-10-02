@@ -18,12 +18,12 @@ var Game = {
 		ball.update();
 	},
 	Distance: function(x,y,x2,y2){
-		var answer = (x2 - x)*(x2 - x) + (y2 - y)*(y2 - y);
-		answer = Math.round(Math.sqrt(answer));
+		var answer = Math.sqrt((x2 - x)*(x2 - x) + (y2 - y)*(y2 - y));
+		answer = Math.round(answer);
 		return answer;
 	},
 	player1 {
-		x: 200,
+		x: 420,
 		y: null,
 		width: null,
 		height: null,
@@ -36,7 +36,7 @@ var Game = {
 		}
 	},
 	player2 {
-		x: 200,
+		x: 420,
 		y: null,
 		width: null,
 		height: null,
