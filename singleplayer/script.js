@@ -35,8 +35,8 @@ var ball = {
 	y: 50,
 	radius: 6,
 	color: "white",
-	vx: 100,
-	vy: 100,
+	vx: 150,
+	vy: 150,
 	draw: function(){
 		ctx.beginPath();
 		ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
@@ -46,6 +46,23 @@ var ball = {
 	update: function(){
 		this.x += this.vx / Game.FPS;
 		this.y += this.vy / Game.FPS;
+		//collision detection
+		if(ball.x + ball.radius > canvas.width){
+			ball.vx = -ball.vx;
+		}
+		if(ball.x - ball.radius < 0){
+			ball.vx = -ball.vx;
+		}
+		if(ball.y + ball.radius > canvas.height){
+			ball.vy = -ball.vy;
+		}
+		if(ball.y - ball.radius < 0){
+			ball.vy = -ball.vy;
+		}
+		//check to see if it has hit paddles
+		if(ball.x - ball.radius > paddle.x && ball.x + ball.radius < paddle.x + paddle.width && ball.y + ball.radius > paddle.y){
+			ball.vy = -ball.vy;
+		}
 	}
 }
 function powerup(type){
@@ -82,9 +99,8 @@ function powerup(type){
 	//and so on...
 	}
 }
-var powerup_types = [/*names of all powerups we think of here*/
-		     big, small, bigBall, smallBall, iceBall, fireBalll, multiBall];
-var powerups = [];//array of all powerups active
+var powerup_types = ["big", "small", "bigBall", "smallBall", "iceBall", "fireBall"];//no multiball, thats too hard to implement here
+var powerups = [];
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var rect = canvas.getBoundingClientRect();
