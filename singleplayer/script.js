@@ -1,6 +1,6 @@
 //Game Vars
 var mouse = {
-	x: null
+	x: 400,
 }
 var paddle = {
 	x: 250,
@@ -17,30 +17,26 @@ var paddle = {
 	}
 }
 var enemypaddle = {
-	x: null,
-	y: null,
-	width: null,
-	height: null,
+	x: 250,
+	y: 7,
+	width: 75,
+	height: 10,
 	color: "red",
 	draw: function(){
 		ctx.fillStyle = this.color;
 		ctx.fillRect(this.x,this.y,this.width,this.height);
 	},
 	update: function(){
-		if (ball.x > this.x) {
-			this.x += 5;
-		}
+		this.x = ball.x - 37;
 	}
 }
 var ball = {
-	x: null,
-	y: null,
-	radius: 4,
-	color: "purple",
-	ax: null,
-	ay: null,
-	vx: null,
-	vy: null,
+	x: 50,
+	y: 50,
+	radius: 6,
+	color: "white",
+	vx: 100,
+	vy: 100,
 	draw: function(){
 		ctx.beginPath();
 		ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
@@ -48,8 +44,6 @@ var ball = {
 		ctx.fill();
 	},
 	update: function(){
-		this.ax += this.vx / Game.FPS;
-		this.ay += this.vy / Game.FPS;
 		this.x += this.vx / Game.FPS;
 		this.y += this.vy / Game.FPS;
 	}
@@ -59,8 +53,6 @@ function powerup(type){
 	this.y = null,
 	this.type = type,
 	this.radius = 4,
-	this.ax = null,
-	this.ay = null,
 	this.vx = null,
 	this.vy = null,
 	this.draw = function(){
@@ -70,8 +62,6 @@ function powerup(type){
 		ctx.fill();
 	},
 	this.update = function(){
-		this.ax += this.vx / Game.FPS;
-		this.ay += this.vy / Game.FPS;
 		this.x += this.vx / Game.FPS;
 		this.y += this.vy / Game.FPS;
 	}
@@ -99,7 +89,7 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var rect = canvas.getBoundingClientRect();
 var Game = {
-	FPS: 20,
+	FPS: 60,
 	Tick: function(){
 		Game.Update();
 		Game.Draw();
