@@ -2,9 +2,12 @@
 var mouse = {
 	x: 400,
 }
+var score = 0;
+var level = 0;
+var alerted = false;
 var paddle = {
 	x: 250,
-	y: 620,
+	y: 624,
 	width: 75,
 	height: 10,
 	color: "blue",
@@ -35,8 +38,8 @@ var ball = {
 	y: 50,
 	radius: 6,
 	color: "white",
-	vx: 150,
-	vy: 150,
+	vx: 200,
+	vy: 200,
 	draw: function(){
 		ctx.beginPath();
 		ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
@@ -47,31 +50,47 @@ var ball = {
 		this.x += this.vx / Game.FPS;
 		this.y += this.vy / Game.FPS;
 		//collision detection
-		if(ball.x + ball.radius > canvas.width){
-			ball.vx = -ball.vx;
+		if(this.x + this.radius > canvas.width){
+			this.vx = -this.vx;
 		}
-		if(ball.x - ball.radius < 0){
-			ball.vx = -ball.vx;
+		if(this.x - this.radius < 0){
+			this.vx = -this.vx;
 		}
-		if(ball.y + ball.radius > canvas.height){
-			ball.vy = -ball.vy;
+		if(this.y + this.radius > canvas.height){
+			if(alerted === false){
+				alert("You failed! Your score was: "+score);
+				alerted = true;
+				ball.x = 5000;
+				paddle.y = 5000;
+				enemypaddle.x = 5000;
+				for(var x in powerups){
+					powerups[x].x = 5000;
+				}
+			}
 		}
-		if(ball.y - ball.radius < 0){
-			ball.vy = -ball.vy;
+		if(this.y - this.radius < 0){
+			this.vy = -this.vy;
 		}
-		//check to see if it has hit paddles
-		if(ball.x - ball.radius > paddle.x && ball.x + ball.radius < paddle.x + paddle.width && ball.y + ball.radius > paddle.y){
-			ball.vy = -ball.vy;
+		//check to see if it has hit paddle
+		if(this.x - this.radius > paddle.x && this.x + this.radius < paddle.x + paddle.width && this.y + this.radius > paddle.y){
+			this.vy = -this.vy;
+			score += 1;
+			this.vx += 50 * level;
+			this.vy += 50 * level;
+		}
+		//and the enemy's paddle
+		if(this.x - this.radius > enemypaddle.x && this.x + this.radius < enemypaddle.x + enemypaddle.width && this.y - this.radius < enemypaddle.y + enemypaddle.height){
+			this.vy = -this.vy;
 		}
 	}
 }
 function powerup(type){
-	this.x = null,
-	this.y = null,
-	this.type = type,
-	this.radius = 4,
-	this.vx = null,
-	this.vy = null,
+	this.x = null;
+	this.y = null;
+	this.type = type;
+	this.radius = 4;
+	this.vx = null;
+	this.vy = null;
 	this.draw = function(){
 		ctx.beginPath();
 		ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
@@ -111,6 +130,9 @@ var Game = {
 		Game.Draw();
 	},
 	Draw: function(){
+		ctx.font = "18px Garamond";
+		ctx.fillStyle = "black";
+		ctx.fillText("Score: "+score,20,20);
 		paddle.draw();
 		enemypaddle.draw();
 		ball.draw();
@@ -126,6 +148,7 @@ var Game = {
 		for(var x in powerups){
 			powerups[x].update();
 		}
+		level = Math.floor(score / 5);
 	},
 	Random: function(min,max){
 		return Math.floor(Math.random() * (max - min + 1)) + min;
