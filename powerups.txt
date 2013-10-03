@@ -5,6 +5,3 @@ Big Ball			Makes the ball big.
 Small Ball (no pun intended)	Makes the ball small.
 Ice Ball			The ball slows down.
 Fire Ball			The ball speeds up.
-Multi Ball			Splits the ball in to multiple, and only one hast to be kept alive.
-#add powerups here whenver you have an idea--even if we probably wont use it. the powerups
-#here should be for both single player and two player.
