@@ -89,6 +89,20 @@ function powerup(type){
 	this.y = Math.random() * 317 + 50;
 	this.type = type;
 	this.radius = 6;
+	switch(type){
+		case "confuse":
+			switch(ball.radius){
+				case 3:
+					this.radius = 3;
+					break;
+				case 6:
+					break;
+				case 10:
+					this.radius = 10;
+					break;
+			}
+			break;
+	}
 	this.vx = Math.random() * 500;
 	this.vy = Math.random() * 500;
 	this.draw = function(){
@@ -186,18 +200,6 @@ function powerup(type){
 			break;
 		case "confuse":
 			this.color = "white";
-			this.effect = function(){
-				switch(ball.radius){
-					case 3:
-						this.radius = 3;
-						break;
-					case 6:
-						break;
-					case 10:
-						this.radius = 10;
-						break;
-				}
-			}
 			break;
 		case "iceBall":
 			this.color = "orange";
