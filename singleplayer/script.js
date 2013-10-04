@@ -190,14 +190,14 @@ function powerup(type){
 			//which confuses the player because they must decide between them
 			break;
 		case "iceBall":
-			this.color = "blue";
+			this.color = "orange";
 			this.effect = function(){
 				ball.vx *= 0.75;
 				ball.vy *= 0.75;
 			}
 			break;
 		case "fireBall":
-			this.color = "blue";
+			this.color = "orange";
 			this.effect = function(){
 				ball.vx *= 1.25;
 				ball.vy *= 1.25;
