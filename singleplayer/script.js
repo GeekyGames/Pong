@@ -186,8 +186,18 @@ function powerup(type){
 			break;
 		case "confuse":
 			this.color = "white";
-			//doesnt do anything but add another ball that is the same size as the normal one
-			//which confuses the player because they must decide between them
+			this.effect = function(){
+				switch(ball.radius){
+					case 3:
+						this.radius = 3;
+						break;
+					case 6:
+						break;
+					case 10:
+						this.radius = 10;
+						break;
+				}
+			}
 			break;
 		case "iceBall":
 			this.color = "orange";
