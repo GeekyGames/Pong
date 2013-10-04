@@ -3,7 +3,7 @@ var mouse = {
 	x: 400,
 }
 var score = 0;
-var level = 0;
+var alive = true;
 var alerted = false;
 var paddle = {
 	x: 250,
@@ -38,8 +38,8 @@ var ball = {
 	y: 50,
 	radius: 6,
 	color: "white",
-	vx: 200,
-	vy: 200,
+	vx: 300,
+	vy: 300,
 	draw: function(){
 		ctx.beginPath();
 		ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
@@ -60,6 +60,7 @@ var ball = {
 			if(alerted === false){
 				alert("You failed! Your score was: "+score);
 				alerted = true;
+				alive = false;
 				ball.x = 5000;
 				paddle.y = 5000;
 				enemypaddle.x = 5000;
@@ -74,7 +75,6 @@ var ball = {
 		//check to see if it has hit paddle
 		if(this.x - this.radius > paddle.x && this.x + this.radius < paddle.x + paddle.width && this.y + this.radius > paddle.y){
 			this.vy = -this.vy;
-			score += 1;
 			this.vx += 50 * level;
 			this.vy += 50 * level;
 		}
@@ -85,12 +85,12 @@ var ball = {
 	}
 }
 function powerup(type){
-	this.x = null;
-	this.y = null;
+	this.x = Math.random() * 417 + 50;
+	this.y = Math.random() * 317 + 50;
 	this.type = type;
 	this.radius = 6;
-	this.vx = null;
-	this.vy = null;
+	this.vx = Math.random() * 500;
+	this.vy = Math.random() * 500;
 	this.draw = function(){
 		ctx.beginPath();
 		ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
@@ -115,10 +115,8 @@ function powerup(type){
 		}
 		//check to see if it has hit paddle
 		if(this.x - this.radius > paddle.x && this.x + this.radius < paddle.x + paddle.width && this.y + this.radius > paddle.y){
-			this.vy = -this.vy;
-			score += 1;
-			this.vx += 50 * level;
-			this.vy += 50 * level;
+			this.x = 5000;
+			this.effect();
 		}
 		//and the enemy's paddle
 		if(this.x - this.radius > enemypaddle.x && this.x + this.radius < enemypaddle.x + enemypaddle.width && this.y - this.radius < enemypaddle.y + enemypaddle.height){
@@ -160,10 +158,10 @@ function powerup(type){
 			this.color = "blue";
 			this.effect = function(){
 				switch(ball.radius){
-					case 2:
+					case 3:
 						break;
 					case 6:
-						ball.radius = 2;
+						ball.radius = 3;
 						break;
 					case 10:
 						ball.radius = 6;
@@ -175,7 +173,7 @@ function powerup(type){
 			this.color = "blue";
 			this.effect = function(){
 				switch(ball.radius){
-					case 2:
+					case 3:
 						ball.radius = 6;
 						break;
 					case 6:
@@ -193,19 +191,21 @@ function powerup(type){
 			break;
 		case "iceBall":
 			this.color = "blue";
-			ball.vx /= 2;
-			ball.vy /= 2;
+			this.effect = function(){
+				ball.vx *= 0.75;
+				ball.vy *= 0.75;
+			}
 			break;
 		case "fireBall":
 			this.color = "blue";
-			ball.vx *= 2;
-			ball.vy *= 2;
+			this.effect = function(){
+				ball.vx *= 1.25;
+				ball.vy *= 1.25;
+			}
 			break;
 	}
 }
 var powerups = [];
-var test = new powerup("confuse");
-powerups.push(test);
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var rect = canvas.getBoundingClientRect();
@@ -227,6 +227,38 @@ var Game = {
 		}
 	},
 	Update: function(){
+		if(alive === true){
+			score += 1;
+		}
+		var choice = Game.Random(1,600);
+		if(choice === 1){
+			var pick = Game.Random(1,7);
+			switch(pick){
+				case 1:
+					powerups.push(new powerup("big"));
+					break;
+				case 2:
+					powerups.push(new powerup("small"));
+					break;
+				case 3:
+					powerups.push(new powerup("bigBall"));
+					break;
+				case 4:
+					powerups.push(new powerup("smallBall"));
+					break;
+				case 5:
+					powerups.push(new powerup("fireBall"));
+					break;
+				case 6:
+					powerups.push(new powerup("iceBall"));
+					break;
+				case 7:
+					for(i=1;i<=3;i++){
+						powerups.push(new powerup("confuse"));
+					}
+					break;
+			}
+		}
 		ctx.clearRect(0,0,canvas.width,canvas.height);
 		paddle.update();
 		enemypaddle.update();
@@ -234,7 +266,6 @@ var Game = {
 		for(var x in powerups){
 			powerups[x].update();
 		}
-		level = Math.floor(score / 5);
 	},
 	Random: function(min,max){
 		return Math.floor(Math.random() * (max - min + 1)) + min;
