@@ -88,7 +88,6 @@ function powerup(type){
 	this.x = Math.random() * 417 + 50;
 	this.y = Math.random() * 317 + 50;
 	this.type = type;
-	this.radius = 6;
 	this.vx = Math.random() * 500;
 	this.vy = Math.random() * 500;
 	this.draw = function(){
@@ -126,6 +125,7 @@ function powerup(type){
 	switch(type){
 		case "big":
 			this.color = "red";
+			this.radius = 6;
 			this.effect = function(){
 				switch(paddle.width){
 					case 50:
@@ -141,6 +141,7 @@ function powerup(type){
 			break;
 		case "small":
 			this.color = "red";
+			this.radius = 6;
 			this.effect = function(){
 				switch(paddle.width){
 					case 50:
@@ -156,6 +157,7 @@ function powerup(type){
 			break;
 		case "smallBall":
 			this.color = "blue";
+			this.radius = 6;
 			this.effect = function(){
 				switch(ball.radius){
 					case 3:
@@ -171,6 +173,7 @@ function powerup(type){
 			break;
 		case "bigBall":
 			this.color = "blue";
+			this.radius = 6;
 			this.effect = function(){
 				switch(ball.radius){
 					case 3:
@@ -190,6 +193,9 @@ function powerup(type){
 				case 3:
 					this.radius = 3;
 					break;
+				case 6:
+					this.radius = 6;
+					break;
 				case 10:
 					this.radius = 10;
 					break;
@@ -197,6 +203,7 @@ function powerup(type){
 			break;
 		case "iceBall":
 			this.color = "orange";
+			this.radius = 6;
 			this.effect = function(){
 				ball.vx *= 0.75;
 				ball.vy *= 0.75;
@@ -204,6 +211,7 @@ function powerup(type){
 			break;
 		case "fireBall":
 			this.color = "orange";
+			this.radius = 6;
 			this.effect = function(){
 				ball.vx *= 1.25;
 				ball.vy *= 1.25;
