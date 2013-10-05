@@ -1,13 +1,7 @@
 //Game Vars
-var mouse = {
-	x: 400,
-}
-var score = 0;
-var alive = true;
-var alerted = false;
-var paddle = {
+var paddle1 = {
 	x: 250,
-	y: 624,
+	y: 10,
 	width: 75,
 	height: 10,
 	color: "blue",
@@ -16,12 +10,12 @@ var paddle = {
 		ctx.fillRect(this.x,this.y,this.width,this.height);
 	},
 	update: function(){
-		this.x = mouse.x;
+		this.x = ;
 	}
 }
-var enemypaddle = {
+var paddle2 = {
 	x: 250,
-	y: 7,
+	y: 624,
 	width: 75,
 	height: 10,
 	color: "red",
@@ -30,7 +24,7 @@ var enemypaddle = {
 		ctx.fillRect(this.x,this.y,this.width,this.height);
 	},
 	update: function(){
-		this.x = ball.x - 37;
+		this.x = ;
 	}
 }
 var ball = {
@@ -57,29 +51,27 @@ var ball = {
 			this.vx = -this.vx;
 		}
 		if(this.y + this.radius > canvas.height){
-			if(alerted === false){
-				alert("You failed! Your score was: "+score);
-				alerted = true;
-				alive = false;
-				ball.x = 5000;
-				paddle.y = 5000;
-				enemypaddle.x = 5000;
-				for(var x in powerups){
-					powerups[x].x = 5000;
-				}
+			ball.x = 5000;
+			paddle1.y = 5000;
+			paddle2.y = 5000;
+			for(var x in powerups){
+				powerups[x].x = 5000;
 			}
 		}
 		if(this.y - this.radius < 0){
-			this.vy = -this.vy;
+			ball.x = 5000;
+			paddle1.y = 5000;
+			paddle2.y = 5000;
+			for(var x in powerups){
+				powerups[x].x = 5000;
+			}
 		}
 		//check to see if it has hit paddle
-		if(this.x - this.radius > paddle.x && this.x + this.radius < paddle.x + paddle.width && this.y + this.radius > paddle.y){
+		if(this.x - this.radius > paddle1.x && this.x + this.radius < paddle1.x + paddle1.width && this.y + this.radius > paddle1.y){
 			this.vy = -this.vy;
-			this.vx += 50 * level;
-			this.vy += 50 * level;
 		}
-		//and the enemy's paddle
-		if(this.x - this.radius > enemypaddle.x && this.x + this.radius < enemypaddle.x + enemypaddle.width && this.y - this.radius < enemypaddle.y + enemypaddle.height){
+		//and the other player's paddle
+		if(this.x - this.radius > paddle2.x && this.x + this.radius < paddle2.x + paddle2.width && this.y - this.radius < paddle2.y + paddle2.height){
 			this.vy = -this.vy;
 		}
 	}
@@ -88,8 +80,8 @@ function powerup(type){
 	this.x = Math.random() * 417 + 50;
 	this.y = Math.random() * 317 + 50;
 	this.type = type;
-	this.vx = Math.random() * 500;
-	this.vy = Math.random() * 500;
+	this.vx = Math.floor(Math.random() * (1001)) - 500;
+	this.vy = Math.floor(Math.random() * (1001)) - 500;
 	this.draw = function(){
 		ctx.beginPath();
 		ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
@@ -115,26 +107,43 @@ function powerup(type){
 		//check to see if it has hit paddle
 		if(this.x - this.radius > paddle.x && this.x + this.radius < paddle.x + paddle.width && this.y + this.radius > paddle.y){
 			this.x = 5000;
-			this.effect();
+			this.effect("p1");
 		}
 		//and the enemy's paddle
 		if(this.x - this.radius > enemypaddle.x && this.x + this.radius < enemypaddle.x + enemypaddle.width && this.y - this.radius < enemypaddle.y + enemypaddle.height){
-			this.vy = -this.vy;
+			this.x = 5000;
+			this.effect("p2");
 		}
 	}
 	switch(type){
 		case "big":
 			this.color = "red";
 			this.radius = 6;
-			this.effect = function(){
-				switch(paddle.width){
-					case 50:
-						paddle.width = 75;
+			this.effect = function(p){
+				switch(p){
+					case "p1":
+						switch(paddle1.width){
+							case 50:
+								paddle1.width = 75;
+								break;
+							case 75:
+								paddle1.width = 100;
+								break;
+							case 100:
+								break;
+						}
 						break;
-					case 75:
-						paddle.width = 100;
-						break;
-					case 100:
+					case "p2":
+						switch(paddle2.width){
+							case 50:
+								paddle2.width = 75;
+								break;
+							case 75:
+								paddle2.width = 100;
+								break;
+							case 100:
+								break;
+						}
 						break;
 				}
 			}
@@ -142,15 +151,31 @@ function powerup(type){
 		case "small":
 			this.color = "red";
 			this.radius = 6;
-			this.effect = function(){
-				switch(paddle.width){
-					case 50:
+			this.effect = function(p){
+				switch(p){
+					case "p1":
+						switch(paddle1.width){
+							case 50:
+								break;
+							case 75:
+								paddle1.width = 50;
+								break;
+							case 100:
+								paddle1.width = 75;
+								break;
+						}
 						break;
-					case 75:
-						paddle.width = 50;
-						break;
-					case 100:
-						paddle.width = 75;
+					case "p2":
+						switch(paddle2.width){
+							case 50:
+								break;
+							case 75:
+								paddle2.width = 50;
+								break;
+							case 100:
+								paddle2.width = 75;
+								break;
+						}
 						break;
 				}
 			}
@@ -280,9 +305,6 @@ var Game = {
 		for(var x in powerups){
 			powerups[x].update();
 		}
-	},
-	Random: function(min,max){
-		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 };
 setInterval(Game.Tick,1000/Game.FPS);
