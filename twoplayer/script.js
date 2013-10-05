@@ -8,9 +8,6 @@ var paddle1 = {
 	draw: function(){
 		ctx.fillStyle = this.color;
 		ctx.fillRect(this.x,this.y,this.width,this.height);
-	},
-	update: function(){
-		this.x = ;
 	}
 }
 var paddle2 = {
@@ -22,9 +19,6 @@ var paddle2 = {
 	draw: function(){
 		ctx.fillStyle = this.color;
 		ctx.fillRect(this.x,this.y,this.width,this.height);
-	},
-	update: function(){
-		this.x = ;
 	}
 }
 var ball = {
@@ -105,12 +99,12 @@ function powerup(type){
 			this.vy = -this.vy;
 		}
 		//check to see if it has hit paddle
-		if(this.x - this.radius > paddle.x && this.x + this.radius < paddle.x + paddle.width && this.y + this.radius > paddle.y){
+		if(this.x - this.radius > paddle1.x && this.x + this.radius < paddle1.x + paddle1.width && this.y + this.radius > paddle1.y){
 			this.x = 5000;
 			this.effect("p1");
 		}
 		//and the enemy's paddle
-		if(this.x - this.radius > enemypaddle.x && this.x + this.radius < enemypaddle.x + enemypaddle.width && this.y - this.radius < enemypaddle.y + enemypaddle.height){
+		if(this.x - this.radius > paddle2.x && this.x + this.radius < paddle2.x + paddle2.width && this.y - this.radius < paddle2.y + paddle2.height){
 			this.x = 5000;
 			this.effect("p2");
 		}
@@ -183,7 +177,7 @@ function powerup(type){
 		case "smallBall":
 			this.color = "blue";
 			this.radius = 6;
-			this.effect = function(){
+			this.effect = function(p){
 				switch(ball.radius){
 					case 3:
 						break;
@@ -199,7 +193,7 @@ function powerup(type){
 		case "bigBall":
 			this.color = "blue";
 			this.radius = 6;
-			this.effect = function(){
+			this.effect = function(p){
 				switch(ball.radius){
 					case 3:
 						ball.radius = 6;
@@ -229,7 +223,7 @@ function powerup(type){
 		case "iceBall":
 			this.color = "orange";
 			this.radius = 6;
-			this.effect = function(){
+			this.effect = function(p){
 				ball.vx *= 0.75;
 				ball.vy *= 0.75;
 			}
@@ -237,7 +231,7 @@ function powerup(type){
 		case "fireBall":
 			this.color = "orange";
 			this.radius = 6;
-			this.effect = function(){
+			this.effect = function(p){
 				ball.vx *= 1.25;
 				ball.vy *= 1.25;
 			}
@@ -247,7 +241,12 @@ function powerup(type){
 var powerups = [];
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-var rect = canvas.getBoundingClientRect();
+var keys = {
+	left: false,
+	right: false,
+	a: false,
+	d: false
+}
 var Game = {
 	FPS: 60,
 	Tick: function(){
@@ -258,17 +257,14 @@ var Game = {
 		ctx.font = "18px Garamond";
 		ctx.fillStyle = "black";
 		ctx.fillText("Score: "+score,20,20);
-		paddle.draw();
-		enemypaddle.draw();
+		paddle1.draw();
+		paddle2.draw();
 		ball.draw();
 		for(var x in powerups){
 			powerups[x].draw();
 		}
 	},
 	Update: function(){
-		if(alive === true){
-			score += 1;
-		}
 		var choice = Game.Random(1,600);
 		if(choice === 1){
 			var pick = Game.Random(1,7);
@@ -299,16 +295,61 @@ var Game = {
 			}
 		}
 		ctx.clearRect(0,0,canvas.width,canvas.height);
-		paddle.update();
-		enemypaddle.update();
 		ball.update();
 		for(var x in powerups){
 			powerups[x].update();
 		}
+		if(keys.left === true){
+			paddle1.x -= 5;
+		}
+		if(keys.right === true){
+			paddle1.x += 5;
+		}
+		if(keys.a === true){
+			paddle2.x -= 5;
+		}
+		if(keys.d === true){
+			paddle2.x += 5;
+		}
+	},
+	Random: function(min,max){
+		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 };
 setInterval(Game.Tick,1000/Game.FPS);
-document.onmousemove = function(e){
+document.onkeydown = function(e){
 	e = e || window.event;
-	mouse.x = e.pageX - rect.left;
+	c = e.keyCode;
+	switch(c){
+		case 65:
+			keys.a = true;
+			break;
+		case 68:
+			keys.d = true;
+			break;
+		case 37:
+			keys.left = true;
+			break;
+		case 39:
+			keys.right = true;
+			break;
+	}
+};
+document.onkeyup = function(e){
+	e = e || window.event;
+	c = e.keyCode;
+	switch(c){
+		case 65:
+			keys.a = false;
+			break;
+		case 68:
+			keys.d = false;
+			break;
+		case 37:
+			keys.left = false;
+			break;
+		case 39:
+			keys.right = false;
+			break;
+	}
 };
