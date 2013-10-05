@@ -61,11 +61,11 @@ var ball = {
 			}
 		}
 		//check to see if it has hit paddle
-		if(this.x - this.radius > paddle1.x && this.x + this.radius < paddle1.x + paddle1.width && this.y + this.radius > paddle1.y){
+		if(this.x - this.radius > paddle2.x && this.x + this.radius < paddle2.x + paddle2.width && this.y + this.radius > paddle2.y){
 			this.vy = -this.vy;
 		}
 		//and the other player's paddle
-		if(this.x - this.radius > paddle2.x && this.x + this.radius < paddle2.x + paddle2.width && this.y - this.radius < paddle2.y + paddle2.height){
+		if(this.x - this.radius > paddle1.x && this.x + this.radius < paddle1.x + paddle1.width && this.y - this.radius < paddle1.y + paddle1.height){
 			this.vy = -this.vy;
 		}
 	}
@@ -74,8 +74,8 @@ function powerup(type){
 	this.x = Math.random() * 417 + 50;
 	this.y = Math.random() * 317 + 50;
 	this.type = type;
-	this.vx = Math.floor(Math.random() * (1001)) - 500;
-	this.vy = Math.floor(Math.random() * (1001)) - 500;
+	this.vx = Math.random() * 500;
+	this.vy = Math.random() * 500;
 	this.draw = function(){
 		ctx.beginPath();
 		ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
@@ -99,14 +99,14 @@ function powerup(type){
 			this.vy = -this.vy;
 		}
 		//check to see if it has hit paddle
-		if(this.x - this.radius > paddle1.x && this.x + this.radius < paddle1.x + paddle1.width && this.y + this.radius > paddle1.y){
-			this.x = 5000;
-			this.effect("p1");
-		}
-		//and the enemy's paddle
-		if(this.x - this.radius > paddle2.x && this.x + this.radius < paddle2.x + paddle2.width && this.y - this.radius < paddle2.y + paddle2.height){
+		if(this.x - this.radius > paddle2.x && this.x + this.radius < paddle2.x + paddle2.width && this.y + this.radius > paddle2.y){
 			this.x = 5000;
 			this.effect("p2");
+		}
+		//and the enemy's paddle
+		if(this.x - this.radius > paddle1.x && this.x + this.radius < paddle1.x + paddle1.width && this.y - this.radius < paddle1.y + paddle1.height){
+			this.x = 5000;
+			this.effect("p1");
 		}
 	}
 	switch(type){
@@ -177,7 +177,7 @@ function powerup(type){
 		case "smallBall":
 			this.color = "blue";
 			this.radius = 6;
-			this.effect = function(p){
+			this.effect = function(){
 				switch(ball.radius){
 					case 3:
 						break;
@@ -193,7 +193,7 @@ function powerup(type){
 		case "bigBall":
 			this.color = "blue";
 			this.radius = 6;
-			this.effect = function(p){
+			this.effect = function(){
 				switch(ball.radius){
 					case 3:
 						ball.radius = 6;
@@ -223,7 +223,7 @@ function powerup(type){
 		case "iceBall":
 			this.color = "orange";
 			this.radius = 6;
-			this.effect = function(p){
+			this.effect = function(){
 				ball.vx *= 0.75;
 				ball.vy *= 0.75;
 			}
@@ -231,7 +231,7 @@ function powerup(type){
 		case "fireBall":
 			this.color = "orange";
 			this.radius = 6;
-			this.effect = function(p){
+			this.effect = function(){
 				ball.vx *= 1.25;
 				ball.vy *= 1.25;
 			}
@@ -254,9 +254,6 @@ var Game = {
 		Game.Draw();
 	},
 	Draw: function(){
-		ctx.font = "18px Garamond";
-		ctx.fillStyle = "black";
-		ctx.fillText("Score: "+score,20,20);
 		paddle1.draw();
 		paddle2.draw();
 		ball.draw();
@@ -300,16 +297,16 @@ var Game = {
 			powerups[x].update();
 		}
 		if(keys.left === true){
-			paddle1.x -= 5;
+			paddle1.x -= 10;
 		}
 		if(keys.right === true){
-			paddle1.x += 5;
+			paddle1.x += 10;
 		}
 		if(keys.a === true){
-			paddle2.x -= 5;
+			paddle2.x -= 10;
 		}
 		if(keys.d === true){
-			paddle2.x += 5;
+			paddle2.x += 10;
 		}
 	},
 	Random: function(min,max){
