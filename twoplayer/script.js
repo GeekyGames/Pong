@@ -2,7 +2,7 @@
 var paddle1 = {
 	x: 250,
 	y: 10,
-	width: 75,
+	width: 500,
 	height: 10,
 	color: "blue",
 	draw: function(){
@@ -13,7 +13,7 @@ var paddle1 = {
 var paddle2 = {
 	x: 250,
 	y: 624,
-	width: 75,
+	width: 500,
 	height: 10,
 	color: "red",
 	draw: function(){
@@ -180,6 +180,7 @@ function powerup(type){
 			this.effect = function(){
 				switch(ball.radius){
 					case 3:
+						ball.radius = 0.5;
 						break;
 					case 6:
 						ball.radius = 3;
@@ -202,23 +203,17 @@ function powerup(type){
 						ball.radius = 10;
 						break;
 					case 10:
+						ball.radius = 50;
+						break;
+					case 50:
+						ball.radius = 100;
 						break;
 				}
 			}
 			break;
 		case "confuse":
 			this.color = "white";
-			switch(ball.radius){
-				case 3:
-					this.radius = 3;
-					break;
-				case 6:
-					this.radius = 6;
-					break;
-				case 10:
-					this.radius = 10;
-					break;
-			}
+			this.radius = ball.radius;
 			break;
 		case "iceBall":
 			this.color = "orange";
@@ -232,8 +227,8 @@ function powerup(type){
 			this.color = "orange";
 			this.radius = 6;
 			this.effect = function(){
-				ball.vx *= 1.25;
-				ball.vy *= 1.25;
+				ball.vx *= 1.5;
+				ball.vy *= 1.5;
 			}
 			break;
 	}
@@ -263,7 +258,7 @@ var Game = {
 	},
 	Update: function(){
 		var choice = Game.Random(1,600);
-		if(choice === 1){
+		if(choice === 1 || choice === 2){
 			var pick = Game.Random(1,7);
 			switch(pick){
 				case 1:
@@ -285,7 +280,7 @@ var Game = {
 					powerups.push(new powerup("iceBall"));
 					break;
 				case 7:
-					for(i=1;i<=3;i++){
+					for(i=1;i<=25;i++){
 						powerups.push(new powerup("confuse"));
 					}
 					break;
