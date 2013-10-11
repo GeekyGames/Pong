@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 //Game Vars
 var paddle1 = {
 	x: 250,
@@ -246,17 +247,23 @@ var keys = {
 var Game = {
 	FPS: 60,
 =======
+=======
+>>>>>>> parent of 3c84a9d... what?
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var rect = canvas.getBoundingClientRect();
 var Game = {
 	FPS: 20,
+<<<<<<< HEAD
+>>>>>>> parent of 3c84a9d... what?
+=======
 >>>>>>> parent of 3c84a9d... what?
 	Tick: function(){
 		Game.Update();
 		Game.Draw();
 	},
 	Draw: function(){
+<<<<<<< HEAD
 <<<<<<< HEAD
 		paddle1.draw();
 		paddle2.draw();
@@ -312,6 +319,8 @@ var Game = {
 		if(keys.d === true){
 			paddle2.x += 10;
 =======
+=======
+>>>>>>> parent of 3c84a9d... what?
 		player1.draw();
 		player2.draw();
 		ball.draw();
@@ -371,14 +380,21 @@ var Game = {
 			this.y += this.vy / FPS;
 			this.vx += this.ax / FPS;
 			this.vy += this.ay / FPS;
+<<<<<<< HEAD
+>>>>>>> parent of 3c84a9d... what?
+=======
 >>>>>>> parent of 3c84a9d... what?
 		}
 	},
 	Random: function(min,max){
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 };
+=======
+	};
+>>>>>>> parent of 3c84a9d... what?
 =======
 	};
 >>>>>>> parent of 3c84a9d... what?
@@ -386,6 +402,7 @@ setInterval(Game.Tick,1000/Game.FPS);
 document.onkeydown = function(e){
 	e = e || window.event;
 	c = e.keyCode;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	switch(c){
 		case 65:
@@ -403,10 +420,13 @@ document.onkeydown = function(e){
 	}
 =======
 >>>>>>> parent of 3c84a9d... what?
+=======
+>>>>>>> parent of 3c84a9d... what?
 };
 document.onkeyup = function(e){
 	e = e || window.event;
 	c = e.keyCode;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	switch(c){
 		case 65:
@@ -424,6 +444,8 @@ document.onkeyup = function(e){
 	}
 };
 =======
+=======
+>>>>>>> parent of 3c84a9d... what?
 };
 document.onmousemove = function mouseMove(e){
 	e = e || window.event;
@@ -437,5 +459,9 @@ document.onmousedown = function mouseDown(e){
 document.onmouseup = function mouseUp(e){
 	e = e || window.event;
 	mouse.down = false;
+<<<<<<< HEAD
+};
+>>>>>>> parent of 3c84a9d... what?
+=======
 };
 >>>>>>> parent of 3c84a9d... what?
